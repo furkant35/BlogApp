@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Blog>
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-3">
+    <h2>Blog List</h2>
+    <hr />
+    <div>
+        <a href="/Blog/Create" class="btn btn-primary">Create</a>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-hover table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>is Approved</th>
+                            <th>is Home</th>
+                            <th>is Slider</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.BlogId</td>
+                            <td>
+                                <img src="~/img/@item.Image" width="100" height="100" />
+                            </td>
+                            <td>@item.Title</td>
+                            <td>@item.Date</td>
+                            <td>
+                                @if (item.isApproved)
+                                {
+                                    <span class="badge badge-success" aria-hidden="true">True</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger" aria-hidden="true">False</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.isHome)
+                                {
+                                    <span class="badge badge-success" aria-hidden="true">True</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger" aria-hidden="true">False</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.isSlider)
+                                {
+                                    <span class="badge badge-success" aria-hidden="true">True</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger" aria-hidden="true">False</span>
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" asp-controller="Blog" asp-action="Edit" asp-route-id="@item.BlogId">Edit</a>
+                                <a class="btn btn-danger btn-sm" asp-controller="Blog" asp-action="Delete" asp-route-id="@item.BlogId">Delete</a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    Blog Eklenmemiş
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
